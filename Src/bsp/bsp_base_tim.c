@@ -46,7 +46,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
     BASIC_TIM_RCC_CLK_ENABLE();
 
     /* 外设中断配置 */
-    HAL_NVIC_SetPriority(BASIC_TIM_IRQ, 1, 0);
+    HAL_NVIC_SetPriority(BASIC_TIM_IRQ, 5, 0);
     HAL_NVIC_EnableIRQ(BASIC_TIM_IRQ);
   }
 }

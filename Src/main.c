@@ -320,16 +320,22 @@ static void SystemClock_Config(void)
   
 }
 
-/*
-
-中断回调函数
-
+/**
+*
+*按键中断回调函数
+*
+*中断服务函数中使用了FreeRTOS的系统时延函数vTaskDelay，调试发现进入vTaskDelay函数后，
+*会在函数xTaskResumeAll中进入临界段函数，会卡死在下面代码处:
+*    if ( uxCriticalNesting == 1)
+*    {
+*        configASSERT( ( portNVIC_INT_CTRL_REG & portVECTACTIVE_MASK ) == 0 );  
+*     }
 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin==KEY1_GPIO_PIN)
   {
-    HAL_Delay(20);/* 延时一小段时间，消除抖动 */
+     //vTaskDelay(20);/* 延时一小段时间，消除抖动 */
     if(HAL_GPIO_ReadPin(KEY1_GPIO,KEY1_GPIO_PIN)==KEY1_DOWN_LEVEL)
     {
        
@@ -339,7 +345,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
   else if(GPIO_Pin==KEY2_GPIO_PIN)
   {
-    HAL_Delay(20);/* 延时一小段时间，消除抖动 */
+    //vTaskDelay(20);/* 延时一小段时间，消除抖动 */
     if(HAL_GPIO_ReadPin(KEY2_GPIO,KEY2_GPIO_PIN)==KEY2_DOWN_LEVEL)
     {
     
@@ -349,7 +355,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
   else if(GPIO_Pin==KEY3_GPIO_PIN)
   {
-    HAL_Delay(20);/* 延时一小段时间，消除抖动 */
+    //vTaskDelay(20);/* 延时一小段时间，消除抖动 */
     if(HAL_GPIO_ReadPin(KEY3_GPIO,KEY3_GPIO_PIN)==KEY3_DOWN_LEVEL)
     {
     
@@ -359,7 +365,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
   else if(GPIO_Pin==KEY4_GPIO_PIN)
   {
-    HAL_Delay(20);/* 延时一小段时间，消除抖动 */
+    //vTaskDelay(20);/* 延时一小段时间，消除抖动 */
     if(HAL_GPIO_ReadPin(KEY4_GPIO,KEY4_GPIO_PIN)==KEY4_DOWN_LEVEL)
     {
      
@@ -371,7 +377,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
   else if(GPIO_Pin==KEY5_GPIO_PIN)
   {
-    HAL_Delay(20);/* 延时一小段时间，消除抖动 */
+    //vTaskDelay(20);/* 延时一小段时间，消除抖动 */
     if(HAL_GPIO_ReadPin(KEY5_GPIO,KEY5_GPIO_PIN)==KEY5_DOWN_LEVEL)
     {
      

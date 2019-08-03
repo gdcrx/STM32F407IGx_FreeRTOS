@@ -78,9 +78,11 @@ void HAL_MspInit(void)
   /* NOTE : This function is generated automatically by STM32CubeMX and eventually  
             modified by the user
   中断分组，设置为NVIC_PRIORITYGROUP_2，抢占中断PreemptPriority：0-3，SubPriority：0-3
+    FreeRTOS的中断配置没有处理亚优先级这种情况，即要求全部为抢占优先级。
+  所以STM32移植freeRTOS时，应将中断优先级配置为4，即16个抢占优先级。
    */ 
   
-  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_2);
+  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /* System interrupt init*/
   /* MemoryManagement_IRQn interrupt configuration */

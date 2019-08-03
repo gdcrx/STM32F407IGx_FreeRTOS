@@ -71,7 +71,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
 static void MX_NVIC_USARTx_Init(void)
 {
   /* USART1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USARTx_IRQn, 1, 0);
+  HAL_NVIC_SetPriority(USARTx_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(USARTx_IRQn);
 }
 

@@ -9,6 +9,9 @@
 /* 包含头文件 ----------------------------------------------------------------*/
 #include "bsp/bsp_key.h"
 
+#include "FreeRTOS.h"
+#include "task.h"
+
 /* 私有类型定义 --------------------------------------------------------------*/
 /* 私有宏定义 ----------------------------------------------------------------*/
 /* 私有变量 ------------------------------------------------------------------*/
@@ -62,19 +65,19 @@ void KEY_GPIO_Init(void)
   HAL_GPIO_Init(KEY5_GPIO, &GPIO_InitStruct);  
   
   /* 配置中断优先级 */
-  HAL_NVIC_SetPriority(EXTI0_IRQn, 1, 0);
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI1_IRQn, 1, 1);
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI2_IRQn, 1, 2);
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI3_IRQn, 2, 0);
+  HAL_NVIC_SetPriority(EXTI3_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI4_IRQn, 2, 1);
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(EXTI4_IRQn);  
 }
 
@@ -145,7 +148,7 @@ KEYState_TypeDef KEY3_StateRead(void)
   if(HAL_GPIO_ReadPin(KEY3_GPIO,KEY3_GPIO_PIN)==KEY3_DOWN_LEVEL)
   {
     /* 延时一小段时间，消除抖动 */
-    HAL_Delay(10);
+    vTaskDelay(10);
     /* 延时时间后再来判断按键状态，如果还是按下状态说明按键确实被按下 */
     if(HAL_GPIO_ReadPin(KEY3_GPIO,KEY3_GPIO_PIN)==KEY3_DOWN_LEVEL)
     {
@@ -172,7 +175,7 @@ KEYState_TypeDef KEY4_StateRead(void)
   if(HAL_GPIO_ReadPin(KEY4_GPIO,KEY4_GPIO_PIN)==KEY4_DOWN_LEVEL)
   {
     /* 延时一小段时间，消除抖动 */
-    HAL_Delay(10);
+    vTaskDelay(10);
     /* 延时时间后再来判断按键状态，如果还是按下状态说明按键确实被按下 */
     if(HAL_GPIO_ReadPin(KEY4_GPIO,KEY4_GPIO_PIN)==KEY4_DOWN_LEVEL)
     {
@@ -199,7 +202,7 @@ KEYState_TypeDef KEY5_StateRead(void)
   if(HAL_GPIO_ReadPin(KEY5_GPIO,KEY5_GPIO_PIN)==KEY5_DOWN_LEVEL)
   {
     /* 延时一小段时间，消除抖动 */
-    HAL_Delay(10);
+    vTaskDelay(10);
     /* 延时时间后再来判断按键状态，如果还是按下状态说明按键确实被按下 */
     if(HAL_GPIO_ReadPin(KEY5_GPIO,KEY5_GPIO_PIN)==KEY5_DOWN_LEVEL)
     {
